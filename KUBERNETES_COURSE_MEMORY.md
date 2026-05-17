@@ -112,6 +112,63 @@ O objetivo é que o aluno consiga:
    - persistência;
 8. formar uma base consistente para estudar Kubernetes mais avançado futuramente.
 
+## 3.3 Projeto prático adotado no curso
+
+O curso utilizará como aplicação-base o projeto:
+
+```text
+ingestor-consumo
+```
+
+O laboratório prático do curso vive neste repositório:
+
+```text
+ingestor-consumo-k8s-lab
+```
+
+Este lab preserva o código real da aplicação para que o aluno aprenda Kubernetes
+em cima de um sistema concreto, com API HTTP, Redis, NGINX, Prometheus, Grafana,
+producer de carga e sender.
+
+### Relação entre os repositórios
+
+- `origin`: repositório do laboratório `ingestor-consumo-k8s-lab`;
+- `upstream`: repositório original `ingestor-consumo`.
+
+### Regra de uso
+
+- Mudanças estritamente didáticas do curso, manifests intermediários, exercícios
+  e anotações ficam no laboratório.
+- Melhorias gerais da aplicação que façam sentido independentemente do curso
+  podem ser levadas de volta ao repositório original.
+- O projeto completo deve ser preservado como aplicação-base real do curso.
+- O curso não deve reduzir artificialmente o código-base para torná-lo mais
+  simples; em vez disso, deve trabalhar com **recortes progressivos da
+  arquitetura**.
+- Em cada aula, apenas os componentes necessários ao conceito atual devem entrar
+  em cena; os demais devem ser incorporados conforme a trilha exigir.
+- O GPT deve considerar este projeto como o sistema de referência do curso, mas
+  evitar tentar migrar toda a arquitetura para Kubernetes de uma só vez. A
+  evolução deve ser progressiva e alinhada aos módulos.
+
+### Estratégia pedagógica para a aplicação-base
+
+O curso deve usar o projeto em camadas:
+
+1. começar com os menores recortes que preservem o conceito estudado;
+2. adicionar componentes apenas quando eles criarem valor didático;
+3. manter o sistema completo como destino final da trilha.
+
+Exemplos de progressão possível:
+
+- primeiros conceitos: `ingestor` isolado ou `ingestor + Redis` simples;
+- escala e comunicação: múltiplas réplicas do `ingestor`, `Service`, `sender`
+  e `producer`;
+- saúde e observabilidade: probes, Prometheus e Grafana;
+- workloads stateful: persistência do Redis, réplica e Sentinels.
+
+Essa progressão existe para reduzir carga cognitiva sem empobrecer o projeto.
+
 ---
 
 # 4. Ambiente técnico obrigatório do curso
@@ -516,6 +573,17 @@ O percentual deve ser atualizado com base no avanço real pelos módulos.
   - sem Docker Desktop;
   - Docker Engine nativo no WSL.
 - O cluster local será criado com `kind`.
+- A aplicação-base do curso será o projeto real `ingestor-consumo`.
+- O curso será desenvolvido no repositório-laboratório
+  `ingestor-consumo-k8s-lab`, mantendo:
+  - `origin` apontando para o lab;
+  - `upstream` apontando para o projeto original.
+- O projeto completo será preservado; o curso utilizará recortes progressivos da
+  arquitetura em vez de simplificar permanentemente o código-base.
+- O laboratório terá a pasta `course/` para organizar:
+  - `notes/`;
+  - `labs/`;
+  - `manifests/`.
 - O curso será acompanhado por percentual de conclusão.
 - Este arquivo será atualizado ao longo da trilha para preservar continuidade.
 

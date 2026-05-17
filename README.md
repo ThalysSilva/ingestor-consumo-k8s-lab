@@ -9,6 +9,10 @@ depois migrando partes do sistema de Docker Compose para manifests Kubernetes,
 e por fim explorando temas como configuração, saúde, exposição, persistência e
 observabilidade.
 
+O projeto completo é preservado como aplicação-base real. Ao longo do curso, os
+laboratórios usarão recortes progressivos da arquitetura em vez de tentar levar
+todos os componentes para Kubernetes desde o início.
+
 ## Organização do laboratório
 
 - **`KUBERNETES_COURSE_MEMORY.md`**: fonte principal de continuidade do curso,
@@ -17,6 +21,7 @@ observabilidade.
 - **`course/labs/`**: exercícios e experimentos guiados.
 - **`course/manifests/`**: manifests Kubernetes criados progressivamente durante
   o curso.
+- **`course/README.md`**: regra de uso progressivo da aplicação-base no lab.
 
 ## Relação com o projeto original
 
