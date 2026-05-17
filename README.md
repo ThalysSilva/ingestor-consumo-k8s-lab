@@ -1,4 +1,37 @@
-# Ingestor de Consumo
+# Ingestor de Consumo — Kubernetes Lab
+
+Este repositório é um laboratório de estudo de Kubernetes baseado no projeto
+`ingestor-consumo`.
+
+Ele mantém a aplicação real como objeto de estudo e adiciona uma trilha prática
+para aprender Kubernetes de forma progressiva: primeiro entendendo os conceitos,
+depois migrando partes do sistema de Docker Compose para manifests Kubernetes,
+e por fim explorando temas como configuração, saúde, exposição, persistência e
+observabilidade.
+
+## Organização do laboratório
+
+- **`KUBERNETES_COURSE_MEMORY.md`**: fonte principal de continuidade do curso,
+  com objetivos, metodologia, progresso e próxima aula.
+- **`course/notes/`**: anotações produzidas ao longo das aulas.
+- **`course/labs/`**: exercícios e experimentos guiados.
+- **`course/manifests/`**: manifests Kubernetes criados progressivamente durante
+  o curso.
+
+## Relação com o projeto original
+
+Este lab preserva a ligação com o projeto-base:
+
+- `origin`: repositório deste laboratório;
+- `upstream`: repositório original `ingestor-consumo`.
+
+Melhorias gerais da aplicação que surgirem durante o curso podem ser levadas de
+volta ao projeto original; arquivos e experimentos estritamente didáticos ficam
+neste laboratório.
+
+---
+
+# Aplicação-base: Ingestor de Consumo
 
 ## Descrição
 
