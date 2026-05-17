@@ -23,5 +23,4 @@ Isso evita duas armadilhas:
 - `labs/`: exercícios, checkpoints e experimentos guiados;
 - `manifests/`: manifests Kubernetes criados progressivamente.
 
-As subpastas específicas de módulos devem ser criadas conforme a trilha avançar,
-não antecipadamente.
+As subpastas específicas de módulos devem ser criadas conforme a trilha avançar, não antecipadamente.

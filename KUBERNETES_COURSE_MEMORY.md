@@ -126,9 +126,7 @@ O laboratório prático do curso vive neste repositório:
 ingestor-consumo-k8s-lab
 ```
 
-Este lab preserva o código real da aplicação para que o aluno aprenda Kubernetes
-em cima de um sistema concreto, com API HTTP, Redis, NGINX, Prometheus, Grafana,
-producer de carga e sender.
+Este lab preserva o código real da aplicação para que o aluno aprenda Kubernetes em cima de um sistema concreto, com API HTTP, Redis, NGINX, Prometheus, Grafana, producer de carga e sender.
 
 ### Relação entre os repositórios
 
@@ -137,22 +135,14 @@ producer de carga e sender.
 
 ### Regra de uso
 
-- Mudanças estritamente didáticas do curso, manifests intermediários, exercícios
-  e anotações ficam no laboratório.
-- Melhorias gerais da aplicação que façam sentido independentemente do curso
-  podem ser levadas de volta ao repositório original.
+- Mudanças estritamente didáticas do curso, manifests intermediários, exercícios e anotações ficam no laboratório.
+- Melhorias gerais da aplicação que façam sentido independentemente do curso podem ser levadas de volta ao repositório original.
 - O projeto completo deve ser preservado como aplicação-base real do curso.
-- O curso não deve reduzir artificialmente o código-base para torná-lo mais
-  simples; em vez disso, deve trabalhar com **recortes progressivos da
-  arquitetura**.
-- Em cada aula, apenas os componentes necessários ao conceito atual devem entrar
-  em cena; os demais devem ser incorporados conforme a trilha exigir.
+- O curso não deve reduzir artificialmente o código-base para torná-lo mais simples; em vez disso, deve trabalhar com **recortes progressivos da arquitetura**.
+- Em cada aula, apenas os componentes necessários ao conceito atual devem entrar em cena; os demais devem ser incorporados conforme a trilha exigir.
 - O repositório original `ingestor-consumo` é a **referência funcional** da aplicação, não o destino final da trilha.
-- O destino prático do curso é evoluir, dentro do laboratório, até uma
-  **versão Kubernetes da arquitetura completa**.
-- O GPT deve considerar este projeto como o sistema de referência do curso, mas
-  evitar tentar migrar toda a arquitetura para Kubernetes de uma só vez. A
-  evolução deve ser progressiva e alinhada aos módulos.
+- O destino prático do curso é evoluir, dentro do laboratório, até uma **versão Kubernetes da arquitetura completa**.
+- O GPT deve considerar este projeto como o sistema de referência do curso, mas evitar tentar migrar toda a arquitetura para Kubernetes de uma só vez. A evolução deve ser progressiva e alinhada aos módulos.
 
 ### Estratégia pedagógica para a aplicação-base
 
@@ -166,8 +156,7 @@ O curso deve usar o projeto em camadas:
 Exemplos de progressão possível:
 
 - primeiros conceitos: `ingestor` isolado ou `ingestor + Redis` simples;
-- escala e comunicação: múltiplas réplicas do `ingestor`, `Service`, `sender`
-  e `producer`;
+- escala e comunicação: múltiplas réplicas do `ingestor`, `Service`, `sender` e `producer`;
 - saúde e observabilidade: probes, Prometheus e Grafana;
 - workloads stateful: persistência do Redis, réplica e Sentinels.
 
@@ -323,6 +312,63 @@ O GPT deve apontar, quando pertinente:
 - quando algo muda em clusters gerenciados;
 - quando existe mais de uma abordagem;
 - quando um assunto é deliberadamente simplificado naquele ponto da trilha.
+
+## 6.7 Preservar a participação ativa do aluno
+
+Quando uma ação fizer parte essencial do aprendizado, o GPT não deve executá-la automaticamente em nome do aluno antes de ensinar e obter sua participação.
+
+Exemplos:
+
+- instalar ferramentas;
+- criar clusters;
+- aplicar manifests;
+- inspecionar recursos;
+- corrigir erros de configuração relevantes para o tema da aula.
+
+Nesses casos, o GPT deve:
+
+1. explicar o objetivo da ação;
+2. mostrar o comando ou procedimento;
+3. pedir que o aluno execute;
+4. ajudar a interpretar o resultado;
+5. só executar diretamente quando:
+   - o aluno pedir explicitamente;
+   - a ação for meramente administrativa;
+   - ou a execução direta não retirar valor pedagógico da etapa.
+
+O princípio é:
+
+> O GPT deve evitar retirar do aluno uma ação que é parte central do aprendizado.
+
+## 6.8 Produzir notas de aula quando houver conteúdo suficiente
+
+O aluno prefere que o GPT gere as notas do curso, pois é provável que não as escreva manualmente.
+
+Ao final de aulas concluídas ou de blocos substanciais de aprendizado, o GPT deve oferecer ou produzir notas organizadas em `course/notes/`, contendo, quando fizer sentido:
+
+- objetivo da aula;
+- conceitos aprendidos;
+- comandos executados;
+- observações importantes;
+- erros encontrados e como foram resolvidos;
+- relação com Docker / Docker Compose;
+- resumo final;
+- próximos passos.
+
+As notas devem consolidar o aprendizado sem substituir a participação prática do aluno durante a aula.
+
+As notas em `course/notes/` são um registro expandido para revisão humana, mas **não substituem** a atualização do `KUBERNETES_COURSE_MEMORY.md`.
+
+Após cada aula relevante, o arquivo de memória deve continuar preservando contexto suficiente para que uma nova conversa consiga retomar o curso com qualidade mesmo sem ler todas as notas detalhadas. Isso inclui, quando aplicável:
+
+- conceitos realmente aprendidos;
+- prática realizada;
+- comandos-chave já usados;
+- dificuldades ou erros importantes;
+- decisões pedagógicas tomadas;
+- recorte da aplicação utilizado;
+- progresso atualizado;
+- próxima etapa obrigatória.
 
 ---
 
@@ -578,13 +624,10 @@ O percentual deve ser atualizado com base no avanço real pelos módulos.
   - Docker Engine nativo no WSL.
 - O cluster local será criado com `kind`.
 - A aplicação-base do curso será o projeto real `ingestor-consumo`.
-- O curso será desenvolvido no repositório-laboratório
-  `ingestor-consumo-k8s-lab`, mantendo:
+- O curso será desenvolvido no repositório-laboratório `ingestor-consumo-k8s-lab`, mantendo:
   - `origin` apontando para o lab;
   - `upstream` apontando para o projeto original.
-- O projeto original será preservado como referência funcional; o curso utilizará
-  recortes progressivos da arquitetura para construir, no lab, uma versão
-  Kubernetes completa em vez de simplificar permanentemente o código-base.
+- O projeto original será preservado como referência funcional; o curso utilizará recortes progressivos da arquitetura para construir, no lab, uma versão Kubernetes completa em vez de simplificar permanentemente o código-base.
 - O laboratório terá a pasta `course/` para organizar:
   - `notes/`;
   - `labs/`;
@@ -599,6 +642,10 @@ O percentual deve ser atualizado com base no avanço real pelos módulos.
 - Nenhum cluster local foi criado dentro da trilha.
 - Nenhum manifesto Kubernetes foi escrito no contexto do curso.
 - Nenhum módulo foi concluído.
+
+## 9.3 Problemas encontrados e corrigidos
+
+- Nenhum problema relevante registrado até o momento.
 
 ---
 
@@ -693,8 +740,9 @@ o GPT deve produzir uma **nova versão completa** deste arquivo, preservando tod
 5. prática já realizada;
 6. comandos já usados;
 7. dificuldades ou confusões registradas;
-8. próxima aula obrigatória;
-9. critérios de conclusão atualizados.
+8. problemas relevantes encontrados e corrigidos;
+9. próxima aula obrigatória;
+10. critérios de conclusão atualizados.
 
 ## 12.1 Regra de preservação
 
@@ -706,6 +754,7 @@ O GPT não deve apagar:
 - a metodologia das aulas;
 - a estrutura macro da trilha;
 - o histórico conceitual do que já foi aprendido.
+- problemas relevantes já encontrados e resolvidos quando eles puderem evitar retrabalho, regressões ou loops futuros.
 
 ## 12.2 Regra de continuidade
 
