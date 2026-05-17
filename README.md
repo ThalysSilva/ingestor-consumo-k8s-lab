@@ -9,9 +9,7 @@ depois migrando partes do sistema de Docker Compose para manifests Kubernetes,
 e por fim explorando temas como configuração, saúde, exposição, persistência e
 observabilidade.
 
-O projeto completo é preservado como aplicação-base real. Ao longo do curso, os
-laboratórios usarão recortes progressivos da arquitetura em vez de tentar levar
-todos os componentes para Kubernetes desde o início.
+O projeto original é preservado como referência funcional da aplicação. Ao longo do curso, os laboratórios usarão recortes progressivos da arquitetura para construir uma versão Kubernetes completa, em vez de tentar levar todos os componentes para o cluster desde o início.
 
 ## Organização do laboratório
 

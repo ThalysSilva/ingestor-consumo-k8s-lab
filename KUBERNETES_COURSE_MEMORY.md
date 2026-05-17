@@ -147,6 +147,9 @@ producer de carga e sender.
   arquitetura**.
 - Em cada aula, apenas os componentes necessários ao conceito atual devem entrar
   em cena; os demais devem ser incorporados conforme a trilha exigir.
+- O repositório original `ingestor-consumo` é a **referência funcional** da aplicação, não o destino final da trilha.
+- O destino prático do curso é evoluir, dentro do laboratório, até uma
+  **versão Kubernetes da arquitetura completa**.
 - O GPT deve considerar este projeto como o sistema de referência do curso, mas
   evitar tentar migrar toda a arquitetura para Kubernetes de uma só vez. A
   evolução deve ser progressiva e alinhada aos módulos.
@@ -157,7 +160,8 @@ O curso deve usar o projeto em camadas:
 
 1. começar com os menores recortes que preservem o conceito estudado;
 2. adicionar componentes apenas quando eles criarem valor didático;
-3. manter o sistema completo como destino final da trilha.
+3. usar o sistema completo como referência funcional;
+4. evoluir gradualmente até sua versão completa em Kubernetes.
 
 Exemplos de progressão possível:
 
@@ -578,8 +582,9 @@ O percentual deve ser atualizado com base no avanço real pelos módulos.
   `ingestor-consumo-k8s-lab`, mantendo:
   - `origin` apontando para o lab;
   - `upstream` apontando para o projeto original.
-- O projeto completo será preservado; o curso utilizará recortes progressivos da
-  arquitetura em vez de simplificar permanentemente o código-base.
+- O projeto original será preservado como referência funcional; o curso utilizará
+  recortes progressivos da arquitetura para construir, no lab, uma versão
+  Kubernetes completa em vez de simplificar permanentemente o código-base.
 - O laboratório terá a pasta `course/` para organizar:
   - `notes/`;
   - `labs/`;

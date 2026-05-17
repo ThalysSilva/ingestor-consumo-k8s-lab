@@ -4,14 +4,13 @@ Esta pasta guarda o material produzido ao longo do curso de Kubernetes.
 
 ## Princípio de uso do projeto
 
-O repositório preserva a aplicação completa como sistema-base real. O curso,
-porém, não precisa colocar toda a arquitetura em cena desde o início.
+O repositório preserva a aplicação completa como referência funcional real. O curso, porém, não precisa colocar toda a arquitetura em cena desde o início.
 
 A progressão será feita por recortes:
 
 1. começar com apenas os componentes necessários ao conceito atual;
 2. adicionar novas peças quando elas ajudarem a ensinar o próximo tópico;
-3. chegar gradualmente ao sistema completo.
+3. evoluir gradualmente até uma versão Kubernetes da arquitetura completa.
 
 Isso evita duas armadilhas:
 
