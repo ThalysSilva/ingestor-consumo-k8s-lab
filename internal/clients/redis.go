@@ -105,14 +105,33 @@ func createRedisClient(host, port string, sentinelAddrs []string, opts ...RedisC
 func InitRedisClient(host, port string, sentinelAddrs []string, opts ...RedisClientOptions) RedisClient {
 	client := createRedisClient(host, port, sentinelAddrs, opts...)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-	_, err := client.Ping(ctx).Result()
-	if err != nil {
-		log.Panic().Msgf("Erro ao conectar ao Redis: %v\n", err)
+	const (
+		maxAttempts = 10
+		retryDelay  = 1 * time.Second
+		pingTimeout = 3 * time.Second
+	)
+
+	var err error
+	for attempt := 1; attempt <= maxAttempts; attempt++ {
+		ctx, cancel := context.WithTimeout(context.Background(), pingTimeout)
+		_, err = client.Ping(ctx).Result()
+		cancel()
+		if err == nil {
+			log.Debug().Msg("Conexão com Redis estabelecida com sucesso!\n")
+			log.Debug().Msgf("RedisClient PoolStats: %v\n", client.PoolStats())
+			return client
+		}
+
+		if attempt < maxAttempts {
+			log.Warn().
+				Err(err).
+				Int("attempt", attempt).
+				Int("max_attempts", maxAttempts).
+				Msg("Falha ao conectar ao Redis; tentando novamente")
+			time.Sleep(retryDelay)
+		}
 	}
 
-	log.Debug().Msg("Conexão com Redis estabelecida com sucesso!\n")
-	log.Debug().Msgf("RedisClient PoolStats: %v\n", client.PoolStats())
-	return client
+	log.Panic().Msgf("Erro ao conectar ao Redis após %d tentativas: %v\n", maxAttempts, err)
+	return nil
 }

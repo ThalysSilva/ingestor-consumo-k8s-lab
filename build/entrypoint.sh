@@ -39,13 +39,19 @@ if ! redis-cli -h localhost -p 26379 ping; then
   exit 1
 fi
 
-# Configura o monitoramento dinamicamente usando o IP
-echo "Configurando Sentinel para monitorar mymaster com IP $PRIMARY_IP..."
-redis-cli -h localhost -p 26379 SENTINEL MONITOR mymaster "$PRIMARY_IP" 6379 2 || {
-  echo "Erro ao configurar MONITOR"
-  kill $SENTINEL_PID
-  exit 1
-}
+# Configura o monitoramento dinamicamente usando o IP apenas no primeiro start.
+# Como o Sentinel persiste o estado em sentinel.conf, recriações podem já ter
+# o master cadastrado.
+if redis-cli -h localhost -p 26379 SENTINEL masters | grep -q "mymaster"; then
+  echo "Master mymaster já configurado; mantendo configuração existente."
+else
+  echo "Configurando Sentinel para monitorar mymaster com IP $PRIMARY_IP..."
+  redis-cli -h localhost -p 26379 SENTINEL MONITOR mymaster "$PRIMARY_IP" 6379 2 || {
+    echo "Erro ao configurar MONITOR"
+    kill $SENTINEL_PID
+    exit 1
+  }
+fi
 redis-cli -h localhost -p 26379 SENTINEL SET mymaster down-after-milliseconds 5000 || {
   echo "Erro ao configurar down-after-milliseconds"
   kill $SENTINEL_PID
@@ -58,19 +64,6 @@ redis-cli -h localhost -p 26379 SENTINEL SET mymaster failover-timeout 60000 || 
 }
 redis-cli -h localhost -p 26379 SENTINEL SET mymaster parallel-syncs 1 || {
   echo "Erro ao configurar parallel-syncs"
-  kill $SENTINEL_PID
-  exit 1
-}
-
-# 🔥 Correção importante para funcionar fora do Docker (Windows/macOS):
-# Isso faz o Sentinel anunciar um IP que o host (seu app Go) consegue acessar.
-redis-cli -h localhost -p 26379 SENTINEL SET mymaster announce-ip host.docker.internal || {
-  echo "Erro ao configurar announce-ip"
-  kill $SENTINEL_PID
-  exit 1
-}
-redis-cli -h localhost -p 26379 SENTINEL SET mymaster announce-port 6379 || {
-  echo "Erro ao configurar announce-port"
   kill $SENTINEL_PID
   exit 1
 }

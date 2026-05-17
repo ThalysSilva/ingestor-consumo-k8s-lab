@@ -8,10 +8,14 @@ services:
     env_file:
       - .env
     depends_on:
-      - redis-primary
-      - redis-sentinel-1
-      - redis-sentinel-2
-      - redis-sentinel-3
+      redis-primary:
+        condition: service_healthy
+      redis-sentinel-1:
+        condition: service_healthy
+      redis-sentinel-2:
+        condition: service_healthy
+      redis-sentinel-3:
+        condition: service_healthy
     networks:
       - pulse-ingestor-network
   ingestor-2:
@@ -23,10 +27,14 @@ services:
     env_file:
       - .env
     depends_on:
-      - redis-primary
-      - redis-sentinel-1
-      - redis-sentinel-2
-      - redis-sentinel-3
+      redis-primary:
+        condition: service_healthy
+      redis-sentinel-1:
+        condition: service_healthy
+      redis-sentinel-2:
+        condition: service_healthy
+      redis-sentinel-3:
+        condition: service_healthy
     networks:
       - pulse-ingestor-network
 
@@ -39,10 +47,14 @@ services:
     env_file:
       - .env
     depends_on:
-      - redis-primary
-      - redis-sentinel-1
-      - redis-sentinel-2
-      - redis-sentinel-3
+      redis-primary:
+        condition: service_healthy
+      redis-sentinel-1:
+        condition: service_healthy
+      redis-sentinel-2:
+        condition: service_healthy
+      redis-sentinel-3:
+        condition: service_healthy
     networks:
       - pulse-ingestor-network
   nginx:
@@ -97,6 +109,12 @@ services:
         condition: service_healthy
       redis-replica:
         condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -h localhost -p 26379 SENTINEL get-master-addr-by-name mymaster | grep -q 6379"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
     networks:
       - pulse-ingestor-network
 
@@ -114,6 +132,12 @@ services:
         condition: service_healthy
       redis-replica:
         condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -h localhost -p 26379 SENTINEL get-master-addr-by-name mymaster | grep -q 6379"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
     networks:
       - pulse-ingestor-network
 
@@ -131,6 +155,12 @@ services:
         condition: service_healthy
       redis-replica:
         condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -h localhost -p 26379 SENTINEL get-master-addr-by-name mymaster | grep -q 6379"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
     networks:
       - pulse-ingestor-network
 
